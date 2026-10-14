@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="kk"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Виртуалды зертхана №1: қауіпсіздік ережелері</title>
+<style>
+:root{--bg:#eef3f2;--sf:#fff;--tx:#14302d;--mu:#587571;--ac:#0f766e;--ac2:#e0f2ef;--ok:#15803d;--okb:#dcfce7;--er:#b91c1c;--erb:#fee2e2;--wn:#b45309;--bd:#cfdcd9;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#0e1a19;--sf:#162826;--tx:#e3f1ee;--mu:#93b2ad;--ac:#2dd4bf;--ac2:#1b3a37;--ok:#4ade80;--okb:#12341f;--er:#f87171;--erb:#3b1616;--wn:#fbbf24;--bd:#2c4744}}
+:root[data-theme=dark]{--bg:#0e1a19;--sf:#162826;--tx:#e3f1ee;--mu:#93b2ad;--ac:#2dd4bf;--ac2:#1b3a37;--ok:#4ade80;--okb:#12341f;--er:#f87171;--erb:#3b1616;--wn:#fbbf24;--bd:#2c4744}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif}
+.w{max-width:860px;margin:0 auto;padding:14px}
+header{display:flex;justify-content:space-between;gap:10px;align-items:baseline;font-weight:700}
+.bar{height:8px;background:var(--bd);border-radius:9px;margin:8px 0 14px;overflow:hidden}.bar i{display:block;height:100%;background:var(--ac);transition:width .4s}
+.card{background:var(--sf);border:1px solid var(--bd);border-radius:14px;padding:18px;position:relative;overflow:hidden}
+h1{font-size:1.7rem;margin:.2em 0}h2{font-size:1.25rem;margin:0 0 6px}p{margin:.4em 0}.mu{color:var(--mu)}
+.nav{display:flex;justify-content:space-between;gap:10px;margin-top:14px}
+button{font:inherit;cursor:pointer;border:1px solid var(--bd);background:var(--sf);color:var(--tx);border-radius:10px;padding:9px 16px}
+button:focus-visible{outline:3px solid var(--ac);outline-offset:2px}
+.pri{background:var(--ac);color:#fff;border-color:var(--ac);font-weight:700}:root[data-theme=dark] .pri{color:#062b27}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]) .pri{color:#062b27}}
+button:disabled{opacity:.4;cursor:not-allowed}
+.grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin:12px 0}
+@media(max-width:560px){.grid{grid-template-columns:repeat(3,1fr)}}
+.ob{display:flex;flex-direction:column;align-items:center;padding:10px 4px;font-size:.8rem;min-height:84px;justify-content:center;text-align:center;background:var(--ac2)}
+.ob b{font-size:2rem;line-height:1.1;font-weight:400}.ob.d{border-color:var(--ok);background:var(--okb)}
+.info{background:var(--ac2);border-left:4px solid var(--ac);border-radius:8px;padding:10px 14px;min-height:56px}
+.fb{margin-top:10px;padding:10px 14px;border-radius:10px;font-weight:600}.fb.g{background:var(--okb);color:var(--ok)}.fb.b{background:var(--erb);color:var(--er)}.fb.n{background:var(--ac2);color:var(--tx)}
+.opts{display:grid;gap:8px;margin-top:10px}.opts button{text-align:left}
+.opts button.g{background:var(--okb);border-color:var(--ok)}.opts button.b{background:var(--erb);border-color:var(--er)}
+.big{font-size:3.4rem;text-align:center;margin:6px 0}
+.sh{animation:sh .5s}@keyframes sh{20%{transform:translateX(-8px)}40%{transform:translateX(8px)}60%{transform:translateX(-6px)}80%{transform:translateX(6px)}}
+#fx{position:absolute;inset:0;display:none;align-items:center;justify-content:center;font-size:6rem;pointer-events:none;background:rgba(185,28,28,.18)}
+#fx.on{display:flex;animation:fo 1.6s forwards}@keyframes fo{0%{opacity:0;transform:scale(.6)}25%{opacity:1;transform:scale(1.1)}80%{opacity:1}100%{opacity:0}}
+.row{display:flex;gap:8px;flex-wrap:wrap}.row .ob{flex:1;min-width:92px}.sc{font-size:3rem;font-weight:800;color:var(--ac)}
+.tag{display:inline-block;background:var(--ac2);border-radius:6px;padding:2px 8px;margin:2px 4px 2px 0;font-size:.9rem}
+@media(prefers-reduced-motion:reduce){.sh,#fx.on{animation:none}#fx.on{opacity:1}}
+</style></head><body><div class="w">
+<header><span>🧪 Зертхана №1</span><span id="st" class="mu"></span></header>
+<div class="bar"><i id="pb"></i></div>
+<div class="card" id="app"></div><div id="fxw"></div>
+<div class="nav"><button id="bk">← Артқа</button><button id="nx" class="pri">Келесі →</button></div>
+</div>
+<script>
+const $=id=>document.getElementById(id);
+const OB=[
+["🫙","Химиялық ыдыстар","Шыны ыдыспен абайлап жұмыс істеу керек."],
+["🧪","Пробиркалар","Қыздырғанда пробирканың аузын басқа студентке қарай бағыттауға болмайды."],
+["⚗️","Колбалар","Шыны ыдыспен абай жұмыс істеңіз."],
+["🔥","Спиртшам","Жанғыш сұйықтықтарды ашық жалынның жанында қыздыруға болмайды."],
+["🧴","Реактивтер","Белгісіз реактивтің дәмін тексеруге болмайды. Иісін қолмен өзіңе қарай бағыттап қана абайлап иіскеңіз."],
+["🗄️","Тартпа шкаф","Қауіпті буы бар заттармен жұмысты тартпа шкафта жүргізіңіз.",1],
+["🥽","Қорғаныс көзілдірігі","Тәжірибе алдында көзілдіріктің тағылуы керек."],
+["🥼","Лабораториялық халат","Тәжірибе алдында халат киіледі."],
+["🧤","Қолғап","Қажет болса қолғап киіледі."],
+["🧯","Өрт сөндіргіш","Өрт шыққанда қолданылатын қауіпсіздік құралы.",1],
+["🪣","Құм салынған жәшік","Өртті сөндіруге арналған қауіпсіздік құралы.",1],
+["🧣","Өртке қарсы көрпе","Киім жанғанда адамның үстін көрпемен жабады.",1],
+["🧰","Алғашқы көмек қобдишасы","Алғашқы медициналық көмек көрсетуге арналған.",1],
+["🚰","Раковина","Жұмыстан кейін су өшірілгеніне көз жеткізіңіз."]];
+const TF=[
+["Студент лабораторияда тамақ ішіп отыр.",0,"Лабораторияда тамақ ішуге болмайды: зат ағзаға түсуі мүмкін."],
+["Студент химиялық заттың иісін ыдысқа еңкейіп тікелей иіскейді.",0,"Дұрыс әрекет: заттың буын қолдың жеңіл қозғалысымен өзіңе қарай бағыттап, абайлап иіскеу."],
+["Пробирканы қыздырғанда оның аузы басқа студентке қарай бағытталған.",0,"Қыздырылатын зат шашырап, басқа студентке зиян келтіруі мүмкін."],
+["Жұмыстан кейін су мен электр құрылғылары өшірілді.",1,"Дұрыс. Жұмыс соңында су мен электр құрылғыларын өшіру керек."],
+["Белгісіз реактивтің дәмін тексеру.",0,"Өте қауіпті! Белгісіз реактивтің дәмін ешқашан тексеруге болмайды."]];
+const RG=[
+["🧫","Қышқыл","күйдіргіш","жабық, таңбаланған ыдыста сақтаңыз","теріге, көзге, киімге тигізбеңіз","буы бөлінсе"],
+["🧂","Сілті","күйдіргіш","жабық, таңбаланған ыдыста сақтаңыз","теріге, көзге, киімге тигізбеңіз","буы бөлінсе"],
+["🍶","Спирт","жанғыш","ашық жалыннан алыс сақтаңыз","ашық жалынның жанында қыздырмаңыз","буы көп бөлінсе"],
+["💧","Ацетон","жанғыш, буы оңай тұтанады","ашық жалыннан алыс сақтаңыз","ашық жалынның жанында қыздырмаңыз","буымен жұмыс істегенде"],
+["⚠️","Бензол","жанғыш, буы қауіпті","ашық жалыннан алыс сақтаңыз","ашық жалынның жанында қыздырмаңыз","әрдайым қауіпті бу бөлетіндіктен"],
+["🧊","Эфир","өте жанғыш, буы оңай тұтанады","ашық жалыннан алыс сақтаңыз","ашық жалын жанында ешқашан қыздырмаңыз","буымен жұмыс істегенде"]];
+// choice items: [emoji, question, options, correct, explanations per option, effect]
+const GL=[["🧪","1/4. Шыны түтікті пробкаға енгізбес бұрын түтіктің ұшымен не істейміз?",["Аздап балқытамыз","Өңдемей қалдырамыз"],0,["Дұрыс: ұшын аздап балқыту өткір жиегін тегістейді.","Өткір жиегі қолды кесіп жарақаттауы мүмкін."],"🩸"],
+["💧","2/4. Түтікті енгізер алдында не істейміз?",["Құрғақ күйінде енгіземіз","Сумен немесе глицеринмен суландырамыз"],1,["Құрғақ түтік қиын кіреді, сынып, қолды жарақаттайды.","Дұрыс: суландыру түтіктің кіруін жеңілдетеді."],"🩸"],
+["✋","3/4. Түтікті қалай ұстаймыз?",["Пробкаға жақын жерінен ұстаймыз","Алыстан ұстап, күшпен итереміз"],0,["Дұрыс: пробкаға жақын ұстасақ, түтік сынбайды.","Алыстан ұстасақ түтік сынып, қолға кіруі мүмкін."],"🩸"],
+["🧻","4/4. Қолды қорғау үшін не істейміз?",["Қолды орамалмен қорғаймыз","Жалаң қолмен енгіземіз"],0,["Дұрыс: орамал қолды жарақаттан қорғайды.","Сынған шыны жалаң қолды жарақаттайды."],"🩸"]];
+const FL=[["🧊","Эфирді ашық жалынның жанында қыздыруға бола ма?",["Иә, болады","Жоқ, болмайды"],1,["Булары оңай тұтанып, өрт шығады!","Дұрыс: жанғыш сұйықтықтың булары оңай тұтанады, сондықтан ашық жалында қыздыруға болмайды."],"🔥"],
+["💧","Ацетонды спиртшамның жанына қоюға бола ма?",["Иә, жақын тұрса да болады","Жоқ, жалыннан алыс болуы керек"],1,["Ацетонның буы жалыннан тұтанады!","Дұрыс: жанғыш сұйықтық ашық жалыннан алыс болуы тиіс."],"🔥"],
+["⚠️","Бензолды қыздыру керек болса, қалай әрекет етеміз?",["Спиртшамның жалынында қыздырамыз","Ашық жалында қыздырмаймыз"],1,["Бензол буы тұтанып кетеді!","Дұрыс: жанғыш заттарды ашық жалында қыздыруға болмайды."],"🔥"],
+["🍶","Спиртті ашық жалынға жақын ыдыстан құюға бола ма?",["Иә","Жоқ"],1,["Спирт буы тұтанып, өрт шығуы мүмкін!","Дұрыс: спирт жанғыш, ашық жалынға жақындатпаңыз."],"🔥"]];
+const SP=[["🧫","Зертханада қышқыл төгілді. Не істейсіз?",["Бірден қолмен сүртемін","Төгілген затты елемеймін","Оқытушыға хабарлап, қауіпсіздік алгоритмін орындаймын"],2,["Қышқылды қолмен сүртуге болмайды: қолды күйдіреді.","Елемесеңіз, қышқыл басқаларға да қауіп төндіреді.","Дұрыс! Алгоритм: 1) оқытушыға хабарлау; 2) қауіпті аймақты қоршау; 3) қорғаныс құралдарымен нұсқауға сай тазалау."],"🩸"]];
+const FR=[["🧑‍🚒","Зертханада адамның киімі жанып кетті. Не істеу керек?",["Жүгіруге мүмкіндік беремін","Үстін өртке қарсы көрпемен немесе халатпен жабамын","Қарап тұра беремін"],1,["Жүгірсе жалын күшейеді: ауа көп түседі.","Дұрыс: жанып тұрған адамды жүгіртпей, үстін көрпемен, халатпен немесе қалың материалмен жабыңыз.","Уақыт жоғалтсаңыз, адам ауыр жарақат алады."],"🔥"]];
+const TS=[
+["Лабораторияда жұмыс алдында не киіледі?",["Халат және қорғаныс көзілдірігі","Тек қолғап","Ештеңе қажет емес"],0],
+["Лабораторияда тамақ ішуге бола ма?",["Иә","Жоқ","Тек тәжірибе соңында"],1],
+["Реактивтің иісін қалай иіскейді?",["Ыдысқа еңкейіп","Буын қолмен өзіңе қарай бағыттап","Мүлде иіскеуге болмайды"],1],
+["Белгісіз реактивтің дәмін тексеруге бола ма?",["Иә, аздап","Тек оқытушы жоқта","Жоқ, өте қауіпті"],2],
+["Қыздырылатын пробирканың аузы қайда бағытталмауы тиіс?",["Басқа студентке қарай","Қабырғаға қарай","Үстелге қарай"],0],
+["Эфирді ашық жалынның жанында қыздыруға бола ма?",["Иә","Жоқ, булары оңай тұтанады","Тек аздап"],1],
+["Қышқыл төгілсе, бірінші не істейсіз?",["Қолмен сүртемін","Елемеймін","Оқытушыға хабарлаймын"],2],
+["Киімі жанған адамға не істеу керек?",["Жүгіртеміз","Көрпемен немесе халатпен жабамыз","Су ішкіземіз"],1],
+["Шыны түтікті пробкаға енгізгенде қолды немен қорғайды?",["Орамалмен","Ештеңемен","Қағазбен ғана"],0],
+["Жұмыс соңында не істеу керек?",["Су мен электр құрылғыларын өшіремін","Бәрін қосулы қалдырамын","Тек шамды өшіремін"],0]];
+const RES=[[9,"Өте жақсы. Сіз зертханадағы қауіпсіздік ережелерін жақсы меңгердіңіз."],[7,"Жақсы. Кейбір қауіпсіздік ережелерін қайталап шығыңыз."],[5,"Қанағаттанарлық. Қауіпсіздік ережелерін қайта оқып шығыңыз."],[0,"Қауіпсіздік талаптары жеткілікті меңгерілмеген. Лабораториялық жұмысты қайта орындаңыз."]];
+const N=12;let s=0,i=0,done={},seen=new Set(),gear={},found=new Set(),viewed=new Set(),ans=[],mode;
+const fx=e=>{const a=$("app");a.classList.remove("sh");void a.offsetWidth;a.classList.add("sh");let f=$("fx");if(!f){f=document.createElement("div");f.id="fx";a.appendChild(f)}f.textContent=e;f.className="";void f.offsetWidth;f.className="on"};
+function scene(find){return `<div class="grid">${OB.map((o,k)=>`<button class="ob ${(find?found:seen).has(k)?'d':''}" data-k="${k}"><b>${o[0]}</b>${find?'?':o[1]}</button>`).join("")}</div>`}
+function R(){
+$("st").textContent=s>0&&s<N-1?`Тапсырма ${s} / ${N-2}`:"";$("pb").style.width=(s/(N-1)*100)+"%";
+$("bk").disabled=s==0||s==N-1;$("nx").style.display=s==N-1?"none":"";
+$("nx").textContent=s==0?"Бастау":s==10?"Нәтижені көру":"Келесі →";$("nx").disabled=!ok();
+const a=$("app");
+if(s==0)a.innerHTML=`<div class="big">🥼🥽🧪</div><h1>Органикалық химия: виртуалды зертхана</h1><h2>Лабораториялық жұмыс №1. Қауіпсіздік ережелері</h2><p class="mu">Зертханаға кіріп, объектілерді басыңыз, шешім қабылдаңыз және қателіктердің салдарын қауіпсіз виртуалды ортада көріңіз. Барлығы 10 тапсырма.</p>`;
+else if(s==1)a.innerHTML=`<h2>Зертхананы шолу</h2><p class="mu">Әр объектіні басып, оның қауіпсіздік ережесін оқыңыз (${seen.size}/${OB.length}).</p>${scene()}<div class="info" id="in">Объектіні басыңыз.</div>`;
+else if(s==2){const g=(k,e,n)=>`<button class="ob ${gear[k]?'d':''}" data-g="${k}"><b>${e}</b>${n}${gear[k]?' ✓':''}</button>`;
+a.innerHTML=`<h2>Зертханалық киімді дайында</h2><p class="mu">Тәжірибені бастамас бұрын қорғаныс құралдарын таңдаңыз.</p><div class="row">${g("h","🥼","Халат")}${g("e","🥽","Көзілдірік")}${g("g","🧤","Қолғап (қажет болса)")}</div><div class="big">${gear.h?'🥼':''}🧑‍🔬${gear.e?'🥽':''}${gear.g?'🧤':''}</div><button class="pri" id="go">🧪 Тәжірибені бастау</button><div id="fb"></div>`}
+else if(s==3)a.innerHTML=`<h2>Зертхананы тексеру</h2><p class="mu">Қауіпсіздік құралдарын табыңыз: өрт сөндіргіш, құм жәшік, өртке қарсы көрпе, алғашқы көмек қобдишасы, тартпа шкаф.</p><div class="fb n">${found.size}/5 қауіпсіздік құралдары табылды</div>${scene(1)}<div class="info" id="in">Объектіні басыңыз.</div>`;
+else if(s==4)tf();
+else if(s==5)a.innerHTML=`<h2>Химиялық заттармен жұмыс</h2><p class="mu">Әр затты ашып, қауіпті сипатын анықтаңыз (${viewed.size}/6).</p><div class="row">${RG.map((r,k)=>`<button class="ob ${viewed.has(k)?'d':''}" data-r="${k}"><b>${r[0]}</b>${r[1]}</button>`).join("")}</div><div class="info" id="in" style="margin-top:12px">Затты таңдаңыз.</div>`;
+else if(s==6)ch(GL,"Шыны ыдыспен жұмыс","Пробиркаға шыны түтікті дұрыс енгізіңіз.");
+else if(s==7)ch(FL,"Жанғыш заттармен жұмыс","Бензол, эфир, спирт, ацетон — жанғыш заттар.");
+else if(s==8)ch(SP,"Төтенше жағдай: қышқыл төгілді","Дұрыс әрекетті таңдаңыз.");
+else if(s==9)ch(FR,"Төтенше жағдай: киім жанды","Секунд сайын маңызды!");
+else if(s==10)test();else result();
+}
+function ok(){return s==0||[0,3,4,5,6,7,8,9,10].includes(s)?(s==0||(s==3?found.size==5:s==4?done[4]>=5:s==5?viewed.size==6:s==10?false:done[s]>0)):(s==1?seen.size>=OB.length:s==2?!!done[2]:true)}
+function tf(){const t=TF[i];done[4]=done[4]||0;const a=$("app");
+a.innerHTML=`<h2>Дұрыс па, бұрыс па? (${i+1}/5)</h2><div class="big">🧑‍🔬</div><p><b>${t[0]}</b></p><div class="opts"><button data-t="1">✅ Қауіпсіз</button><button data-t="0">⛔ Қауіпті</button></div><div id="fb"></div>`}
+let cur=0;
+function ch(L,tt,sub){const q=L[cur];const a=$("app");
+a.innerHTML=`<h2>${tt}</h2><p class="mu">${sub}${L.length>1?` (${cur+1}/${L.length})`:''}</p><div class="big">${q[0]}</div><p><b>${q[1]}</b></p><div class="opts">${q[2].map((o,k)=>`<button data-c="${k}">${o}</button>`).join("")}</div><div id="fb"></div>${cur<L.length-1&&done["c"+s+cur]?'<button class="pri" id="nq" style="margin-top:10px">Келесі сұрақ</button>':''}`}
+function test(){const q=TS[i];$("app").innerHTML=`<h2>Қорытынды тест: ${i+1}/10</h2><p><b>${q[0]}</b></p><div class="opts">${q[1].map((o,k)=>`<button data-q="${k}">${o}</button>`).join("")}</div>`;$("nx").disabled=true}
+function result(){const sc=ans.filter((v,k)=>v==TS[k][2]).length;const m=RES.find(r=>sc>=r[0])[1];
+$("app").innerHTML=`<div class="big">${sc>=7?'🎓':'📘'}</div><div style="text-align:center"><div class="sc">${sc} / 10</div><h2>${m}</h2></div><div style="text-align:center;margin-top:12px"><button class="pri" id="rs">Қайта бастау</button></div>`}
+$("app").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;const d=b.dataset;
+if(d.k!==undefined){const o=OB[+d.k],n=$("in");
+if(s==1){seen.add(+d.k);n.innerHTML=`<b>${o[0]} ${o[1]}.</b> ${o[2]}`;b.classList.add("d");R2()}
+else if(o[3]){found.add(+d.k);R();$("in").innerHTML=`<b>${o[0]} ${o[1]}</b> табылды! ${o[2]}`;R2()}
+else n.textContent="Бұл қауіпсіздік құралы емес. Іздеуді жалғастырыңыз."}
+if(d.g){gear[d.g]=!gear[d.g];R()}
+if(b.id=="go"){if(gear.h&&gear.e){done[2]=1;$("fb").innerHTML='<div class="fb g">✅ Қорғаныс құралдары дайын. Тәжірибеге кірісуге болады.</div>';$("nx").disabled=false}else $("fb").innerHTML='<div class="fb b">Қауіпсіздік талаптары сақталмады! Алдымен қорғаныс құралдарын пайдаланыңыз.</div>'}
+if(d.t!==undefined){const t=TF[i],c=(+d.t==t[1]);fb(c,(c?"Дұрыс! ":"Қате. ")+t[2]);if(!c)fx("⚠️");else{}
+b.classList.add(c?'g':'b');a_tf(c)}
+if(d.r!==undefined){const r=RG[+d.r];viewed.add(+d.r);b.classList.add("d");$("in").innerHTML=`<b>${r[0]} ${r[1]}</b><br><span class="tag">Қауіп: ${r[2]}</span><br>Сақтау: ${r[3]}.<br>Абай болу: ${r[4]}.<br>Тартпа шкафта жұмыс жасау: ${r[5]}.`;R2()}
+if(d.c!==undefined){const L={6:GL,7:FL,8:SP,9:FR}[s],q=L[cur],c=+d.c==q[3];b.classList.add(c?'g':'b');
+$("fb").innerHTML=`<div class="fb ${c?'g':'b'}">${c?'✅':'❌'} ${q[4][+d.c]}</div>`;
+if(!c)fx(q[5]);else{done["c"+s+cur]=1;if(cur<L.length-1)$("fb").insertAdjacentHTML("afterend",'<button class="pri" id="nq" style="margin-top:10px">Келесі сұрақ</button>');else{done[s]=1;$("nx").disabled=false}}}
+if(d.q!==undefined){ans[i]=+d.q;b.classList.add(+d.q==TS[i][2]?'g':'b');i++;if(i<10)test();else{s=11;R()}}
+if(b.id=="nq"){cur++;R()}
+if(b.id=="rs"){s=0;i=0;cur=0;done={};seen=new Set();gear={};found=new Set();viewed=new Set();ans=[];R()}});
+function R2(){$("nx").disabled=!ok();const p=$("app").querySelector(".mu");if(s==1)p.textContent=`Әр объектіні басып, оның қауіпсіздік ережесін оқыңыз (${seen.size}/${OB.length}).`;if(s==3)$("app").querySelector(".fb").textContent=`${found.size}/5 қауіпсіздік құралдары табылды`;if(s==5)p.textContent=`Әр затты ашып, қауіпті сипатын анықтаңыз (${viewed.size}/6).`}
+function fb(c,t){$("fb").innerHTML=`<div class="fb ${c?'g':'b'}">${c?'✅':'❌'} ${t}</div>`}
+function a_tf(c){document.querySelectorAll(".opts button").forEach(x=>x.disabled=true);$("fb").insertAdjacentHTML("afterend",`<button class="pri" id="nt" style="margin-top:10px">${i<4?'Келесі жағдай':'Аяқтау'}</button>`);$("nt").onclick=()=>{if(i<4){i++;R()}else{done[4]=5;i=0;$("nx").disabled=false;$("nt").remove()}}}
+$("nx").onclick=()=>{if(s==9&&cur>=0)cur=0;s++;i=0;cur=0;R();scrollTo(0,0)};
+$("bk").onclick=()=>{s--;i=0;cur=0;R()};
+R();
+</script></body></html>
